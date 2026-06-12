@@ -1,0 +1,13 @@
+# Virtual environment files
+venv/
+.venv/
+ENV/
+
+# Local sensitive API keys and configurations
+.env
+
+# Python caching systems
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
