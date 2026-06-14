@@ -13,7 +13,7 @@ APP_KEY = os.getenv("ADZUNA_APP_KEY")
 BASE_URL = "https://api.adzuna.com/v1/api/jobs"
 
 
-def fetch_api_page(country_code, target_term, page_number):
+def fetch_single_page(country_code, target_term, page_number):
     # Executes an isolated API call to extract an atomic data block from Adzuna
     url = f"{BASE_URL}/{country_code}/search/{page_number}"
 
@@ -36,7 +36,7 @@ def fetch_all_jobs(country_code="gb", keyword="Data Analyst", max_pages=None):
     page = 1
 
     # First request (to find total pages)
-    first_response = fetch_api_page(country_code, keyword, page)
+    first_response = fetch_single_page(country_code, keyword, page)
 
     if not first_response:
         print("Failed to fetch data")
@@ -59,7 +59,7 @@ def fetch_all_jobs(country_code="gb", keyword="Data Analyst", max_pages=None):
     # Loop through remaining pages
     for page in range(2, total_pages + 1):
         try:
-            data = fetch_api_page(country_code, keyword, page)
+            data = fetch_single_page(country_code, keyword, page)
             jobs = data.get("results", [])
             all_jobs.extend(jobs)
             print(f"Fetched page {page} with {len(jobs)} jobs")
